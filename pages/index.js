@@ -7,7 +7,13 @@ import { useState, useEffect, useReducer } from "react";
 import axios from "axios";
 import Pagination from "react-bootstrap/Pagination";
 
-const PaginationItem = ({ items, pageSize, onPageChange, nextPage }) => {
+const PaginationItem = ({
+  items,
+  pageSize,
+  onPageChange,
+  nextApiPage,
+  previousApiPage,
+}) => {
   if (items.length <= 1) return null;
 
   let num = Math.ceil(items.length / pageSize);
@@ -29,13 +35,9 @@ const PaginationItem = ({ items, pageSize, onPageChange, nextPage }) => {
           marginBottom: "5rem",
         }}
       >
-        <Pagination.Prev
-          onClick={(event) => {
-            console.log("maman");
-          }}
-        />
+        <Pagination.Prev onClick={previousApiPage} />
         <ul className="pagination">{list}</ul>
-        <Pagination.Next onClick={nextPage} />
+        <Pagination.Next onClick={nextApiPage} />
       </Pagination>
     </div>
   );
@@ -101,27 +103,39 @@ function App() {
   const [query, setQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPagesize] = useState(5);
-  const [pageNumber, setPageNumber] = useState(0);
+  const [apiPageNumber, setApiPageNumber] = useState(0);
   const [{ data, isloading, isError }, doFetch] = useDataApi(
     { _embedded: { events: [] }, page: { totalPages: 0, number: 0 } },
-    `https://app.ticketmaster.com/discovery/v2/events?apikey=zhgYGyl2ENoFnuVxA9JARhuGcHep9N79&locale=*&page=0&countryCode=US&stateCode=CA&classificationName=music`
+    `https://app.ticketmaster.com/discovery/v2/events?apikey=zhgYGyl2ENoFnuVxA9JARhuGcHep9N79&locale=*&page=0&countryCode=US&stateCode=LA&classificationName=music`
   );
+  const handleApiPageNext = (e) => {
+    if (apiPageNumber <= data.page.totalPages - 1) {
+      setApiPageNumber(apiPageNumber + 1);
+      doFetch(
+        `https://app.ticketmaster.com/discovery/v2/events?apikey=zhgYGyl2ENoFnuVxA9JARhuGcHep9N79&locale=*&page=${apiPageNumber}&countryCode=US&stateCode=${query}&classificationName=music`
+      );
+    } else return;
+  };
+  const handleApiPagePrevious = (e) => {
+    if (apiPageNumber >= 1) {
+      setApiPageNumber(apiPageNumber - 1);
+      doFetch(
+        `https://app.ticketmaster.com/discovery/v2/events?apikey=zhgYGyl2ENoFnuVxA9JARhuGcHep9N79&locale=*&page=${apiPageNumber}&countryCode=US&stateCode=${query}&classificationName=music`
+      );
+    } else return;
+  };
+  console.log(` Api Page number: ${data.page.number}`);
+  console.log(`Total Page: ${data.page.totalPages}`);
+
   const handlePageChange = (e) => {
     setCurrentPage(Number(e.target.textContent));
   };
   let page = data._embedded.events;
   if (page.length >= 1) {
     page = paginate(page, currentPage, pageSize);
-    console.log(`currentPage: ${currentPage}`);
+    // console.log(`currentPage: ${currentPage}`);
   }
-  const handlePageNext = (e) => {
-    console.log("hello");
-    // if (pageNumber < data.page.totalPages - 1) {
-    //   setPageNumber(pageNumber + 1);
-    // } else return;
-  };
-  console.log(data.page.number);
-  console.log(data.page.totalPages);
+
   return (
     <>
       <div style={{ position: "relative" }}>
@@ -135,7 +149,7 @@ function App() {
           <Form
             onSubmit={(event) => {
               doFetch(
-                `https://app.ticketmaster.com/discovery/v2/events?apikey=zhgYGyl2ENoFnuVxA9JARhuGcHep9N79&locale=*&page=${pageNumber}&countryCode=US&stateCode=${query}&classificationName=music`
+                `https://app.ticketmaster.com/discovery/v2/events?apikey=zhgYGyl2ENoFnuVxA9JARhuGcHep9N79&locale=*&page=${apiPageNumber}&countryCode=US&stateCode=${query}&classificationName=music`
               );
 
               event.preventDefault();
@@ -146,7 +160,7 @@ function App() {
                 <Form.Select
                   onChange={(event) => {
                     setQuery(event.target.value);
-                    setPageNumber(0);
+                    setApiPageNumber(0);
                   }}
                 >
                   <option value="" className="text-muted">
@@ -206,7 +220,6 @@ function App() {
                 </Form.Select>
               </Col>
               <Col>
-                {/* <button onClick={() => handlePageNext()}>next</button> */}
                 <Button variant="danger" type="submit" className="searchbutton">
                   Search
                 </Button>
@@ -261,7 +274,8 @@ function App() {
       <PaginationItem
         items={data._embedded.events}
         pageSize={pageSize}
-        nextPage={handlePageNext}
+        nextApiPage={handleApiPageNext}
+        previousApiPage={handleApiPagePrevious}
         onPageChange={handlePageChange}
       ></PaginationItem>
     </>
