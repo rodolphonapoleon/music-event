@@ -19,9 +19,11 @@ const NavbarNavigation = () => {
               <Link href="/" passHref className="nav-item">
                 <a className="nav-link">Home</a>
               </Link>
-
               <Link href="/about" passHref className="nav-item">
                 <a className="nav-link">About</a>
+              </Link>
+              <Link href="/contact" passHref className="nav-item">
+                <a className="nav-link">Contact</a>
               </Link>
             </Nav>
           </Navbar.Collapse>

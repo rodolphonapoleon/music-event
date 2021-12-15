@@ -1,8 +1,8 @@
 import { Container } from "react-bootstrap";
-export default function About() {
+export default function Contact() {
   return (
     <Container>
-      <h3>About</h3>
+      <h3>Contact</h3>
     </Container>
   );
 }

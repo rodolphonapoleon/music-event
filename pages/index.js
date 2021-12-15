@@ -1,7 +1,7 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import Image from "next/image";
-import logo from "../homebanner.png";
+import logo from "../bannerhome.png";
 import { Button, Card, Row, Col, Form } from "react-bootstrap";
 import { useState, useEffect, useReducer } from "react";
 import axios from "axios";
@@ -98,13 +98,13 @@ const useDataApi = (initialData, initialUrl) => {
 };
 
 function App() {
-  const [query, setQuery] = useState("AL");
+  const [query, setQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPagesize] = useState(5);
   const [pageNumber, setPageNumber] = useState(0);
   const [{ data, isloading, isError }, doFetch] = useDataApi(
     { _embedded: { events: [] }, page: { totalPages: 0, number: 0 } },
-    `https://app.ticketmaster.com/discovery/v2/events?apikey=zhgYGyl2ENoFnuVxA9JARhuGcHep9N79&locale=*&page=0&countryCode=US&stateCode=AL&classificationName=music`
+    `https://app.ticketmaster.com/discovery/v2/events?apikey=zhgYGyl2ENoFnuVxA9JARhuGcHep9N79&locale=*&page=0&countryCode=US&stateCode=CA&classificationName=music`
   );
   const handlePageChange = (e) => {
     setCurrentPage(Number(e.target.textContent));
@@ -149,6 +149,9 @@ function App() {
                     setPageNumber(0);
                   }}
                 >
+                  <option value="" className="text-muted">
+                    Choose your state
+                  </option>
                   <option value="AL">Alabama</option>
                   <option value="AK">Alaska</option>
                   <option value="AZ">Arizona</option>
