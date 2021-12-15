@@ -1,10 +1,10 @@
 import "../styles/globals.css";
 import Layout from "../comps/layout";
-import "bootstrap/dist/css/bootstrap.min.css";
+import "../styles/index.scss";
 
 function MyApp({ Component, pageProps }) {
   return (
-    <Layout>
+    <Layout className="vh-100">
       <Component {...pageProps} />
     </Layout>
   );

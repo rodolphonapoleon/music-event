@@ -1,0 +1,13 @@
+$body-bg: #fff2ff;
+$primary: rgb(53, 98, 177);
+$danger: rgb(243, 83, 192);
+/* import bootstrap to set changes */
+
+$position-values: (
+  0: 0,
+  50: 50%,
+  100: 100%,
+  75: 75%,
+);
+
+@import "../node_modules/bootstrap/scss/bootstrap";
