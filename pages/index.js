@@ -136,6 +136,12 @@ function App() {
     // console.log(`currentPage: ${currentPage}`);
   }
 
+  useEffect(() => {
+    doFetch(
+      `https://app.ticketmaster.com/discovery/v2/events?apikey=zhgYGyl2ENoFnuVxA9JARhuGcHep9N79&locale=*&page=${apiPageNumber}&countryCode=US&stateCode=${query}&classificationName=music`
+    );
+  }, [apiPageNumber]);
+
   return (
     <>
       <div style={{ position: "relative" }}>
