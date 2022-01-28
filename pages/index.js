@@ -266,7 +266,12 @@ function App() {
                       {item.dates.start.localTime}
                     </Card.Text>
                     <Button variant="primary" size="sm" className="">
-                      <a className={styles.linkticket} href={item.url}>
+                      <a
+                        className={styles.linkticket}
+                        href={item.url}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                      >
                         BUY TICKET
                       </a>
                     </Button>
