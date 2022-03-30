@@ -4,10 +4,8 @@ import styles from "../styles/Home.module.css";
 const Layout = ({ children }) => {
   return (
     <>
-      <div className="min-vh-100">
-        <NavbarNavigation />
-        {children}
-      </div>
+      <NavbarNavigation />
+      <div className="min-vh-100 fluid">{children}</div>
       <Footer />
     </>
   );

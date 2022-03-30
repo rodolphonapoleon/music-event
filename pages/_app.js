@@ -4,7 +4,7 @@ import "../styles/index.scss";
 
 function MyApp({ Component, pageProps }) {
   return (
-    <Layout className="vh-100">
+    <Layout className="vh-100 mx-auto">
       <Component {...pageProps} />
     </Layout>
   );
