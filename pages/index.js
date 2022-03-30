@@ -245,47 +245,45 @@ function App() {
         ) : (
           <div>
             {page.map((item) => (
-              <div className="border">
-                <Card
-                  className="my-5 mx-auto border-white shadow rounded"
-                  key={item.id}
-                  style={{ maxWidth: "60rem" }}
-                >
-                  <Row>
-                    <Col>
-                      <Card.Img variant="top" src={item.images[0].url} />
-                    </Col>
-                    <Col>
-                      <Card.Body>
-                        <Card.Title className="fs-3">{item.name}</Card.Title>
-                        <Card.Text className="text-danger fs-5">
-                          {item._embedded.venues[0].name}
-                        </Card.Text>
-                        <Card.Text>
-                          {item._embedded.venues[0].address.line1},{" "}
-                          {item._embedded.venues[0].city.name},{" "}
-                          {item._embedded.venues[0].state.stateCode}{" "}
-                          {item._embedded.venues[0].postalCode}
-                        </Card.Text>
-                        <Card.Text>
-                          {item.dates.start.localDate} /{" "}
-                          {item.dates.start.localTime}
-                        </Card.Text>
-                        <Button variant="primary" size="sm" className="">
-                          <a
-                            className={styles.linkticket}
-                            href={item.url}
-                            target="_blank"
-                            rel="noreferrer noopener"
-                          >
-                            BUY TICKET
-                          </a>
-                        </Button>
-                      </Card.Body>
-                    </Col>
-                  </Row>
-                </Card>
-              </div>
+              <Card
+                className="my-5 mx-auto border-white shadow rounded"
+                key={item.id}
+                style={{ maxWidth: "60rem" }}
+              >
+                <Row>
+                  <Col>
+                    <Card.Img variant="top" src={item.images[0].url} />
+                  </Col>
+                  <Col>
+                    <Card.Body>
+                      <Card.Title className="fs-3">{item.name}</Card.Title>
+                      <Card.Text className="text-danger fs-5">
+                        {item._embedded.venues[0].name}
+                      </Card.Text>
+                      <Card.Text>
+                        {item._embedded.venues[0].address.line1},{" "}
+                        {item._embedded.venues[0].city.name},{" "}
+                        {item._embedded.venues[0].state.stateCode}{" "}
+                        {item._embedded.venues[0].postalCode}
+                      </Card.Text>
+                      <Card.Text>
+                        {item.dates.start.localDate} /{" "}
+                        {item.dates.start.localTime}
+                      </Card.Text>
+                      <Button variant="primary" size="sm" className="">
+                        <a
+                          className={styles.linkticket}
+                          href={item.url}
+                          target="_blank"
+                          rel="noreferrer noopener"
+                        >
+                          BUY TICKET
+                        </a>
+                      </Button>
+                    </Card.Body>
+                  </Col>
+                </Row>
+              </Card>
             ))}
           </div>
         )}
