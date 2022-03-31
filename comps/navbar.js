@@ -14,15 +14,18 @@ const NavbarNavigation = () => {
             </a>
           </Link>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              <Link href="/" passHref className="nav-item">
+          <Navbar.Collapse
+            id="basic-navbar-nav"
+            className="justify-content-end border"
+          >
+            <Nav className=" border me-5">
+              <Link href="/" passHref className="nav-item border text-danger">
                 <a className="nav-link">Home</a>
               </Link>
-              <Link href="/about" passHref className="nav-item">
+              <Link href="/about" passHref className="nav-item border">
                 <a className="nav-link">About</a>
               </Link>
-              <Link href="/contact" passHref className="nav-item">
+              <Link href="/contact" passHref className="nav-item border">
                 <a className="nav-link">Contact</a>
               </Link>
             </Nav>

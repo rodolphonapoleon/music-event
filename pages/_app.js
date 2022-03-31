@@ -1,5 +1,4 @@
 import "../styles/globals.css";
-import "../styles/styles-responsive.css";
 import Layout from "../comps/layout";
 import "../styles/index.scss";
 

@@ -6,6 +6,7 @@ import { Button, Card, Row, Col, Form, Container } from "react-bootstrap";
 import { useState, useEffect, useReducer } from "react";
 import axios from "axios";
 import Pagination from "react-bootstrap/Pagination";
+import SelectUSState from "react-select-us-states";
 
 const PaginationItem = ({
   items,
@@ -100,9 +101,9 @@ const useDataApi = (initialData, initialUrl) => {
 };
 
 function App() {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState("AL");
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPagesize] = useState(5);
+  const [pageSize, setPagesize] = useState(10);
   const [apiPageNumber, setApiPageNumber] = useState(0);
   const [{ data, isloading, isError }, doFetch] = useDataApi(
     { _embedded: { events: [] }, page: { totalPages: 0, number: 0 } },
@@ -124,8 +125,8 @@ function App() {
       );
     } else return;
   };
-  console.log(` Api Page number: ${data.page.number}`);
-  console.log(`Total Page: ${data.page.totalPages}`);
+  // console.log(` Api Page number: ${data.page.number}`);
+  // console.log(`Total Page: ${data.page.totalPages}`);
 
   const handlePageChange = (e) => {
     setCurrentPage(Number(e.target.textContent));
@@ -167,67 +168,13 @@ function App() {
             >
               <Row className="gx-0 shadow">
                 <Col xs={9}>
-                  <Form.Select
-                    onChange={(event) => {
-                      setQuery(event.target.value);
+                  <SelectUSState
+                    className="form-select"
+                    onChange={(value) => {
+                      setQuery(value);
                       setApiPageNumber(0);
                     }}
-                  >
-                    <option value="" className="text-muted">
-                      Choose your state
-                    </option>
-                    <option value="AL">Alabama</option>
-                    <option value="AK">Alaska</option>
-                    <option value="AZ">Arizona</option>
-                    <option value="AR">Arkansas</option>
-                    <option value="CA">California</option>
-                    <option value="CO">Colorado</option>
-                    <option value="CT">Connecticut</option>
-                    <option value="DE">Delaware</option>
-                    <option value="DC">District of Columbia</option>
-                    <option value="FL">Florida</option>
-                    <option value="GA">Georgia</option>
-                    <option value="HI">Hawaii</option>
-                    <option value="ID">Idaho</option>
-                    <option value="IL">Illinois</option>
-                    <option value="IN">Indiana</option>
-                    <option value="IO">Iowa</option>
-                    <option value="KS">Kansas</option>
-                    <option value="KY">Kentucky</option>
-                    <option value="LA">Louisiana</option>
-                    <option value="ME">Maine</option>
-                    <option value="MD">Maryland</option>
-                    <option value="MA">Massachusetts</option>
-                    <option value="MI">Michigan</option>
-                    <option value="MN">Minnesota</option>
-                    <option value="MS">Mississippi</option>
-                    <option value="MO">Missouri</option>
-                    <option value="MT">Montana</option>
-                    <option value="NE">Nebraska</option>
-                    <option value="NV">Nevada</option>
-                    <option value="NH">New Hampshire</option>
-                    <option value="NJ">New Jersey</option>
-                    <option value="NM">New Mexico</option>
-                    <option value="NY">New York</option>
-                    <option value="NC">North Carolina</option>
-                    <option value="ND">North Dakota</option>
-                    <option value="OH">Ohio</option>
-                    <option value="OK">Oklahoma</option>
-                    <option value="OR">Oregon</option>
-                    <option value="PA">Pennsylvania</option>
-                    <option value="RI">Rhode Island</option>
-                    <option value="SC">South Carolina</option>
-                    <option value="SD">South Dakota</option>
-                    <option value="TN">Tennessee</option>
-                    <option value="TX">Texas</option>
-                    <option value="UT">Utah</option>
-                    <option value="VT">Vermont</option>
-                    <option value="VA">Virginia</option>
-                    <option value="WA">Washington</option>
-                    <option value="WV">West Virginia</option>
-                    <option value="WI">Wisconsin</option>
-                    <option value="WY">Wyoming</option>
-                  </Form.Select>
+                  />
                 </Col>
                 <Col>
                   <Button
@@ -249,7 +196,10 @@ function App() {
           <div>
             {page.map((item) => (
               <Card
-                className="my-5 mx-auto border-white shadow rounded cardwidth"
+                className="my-5 mx-auto border-white shadow rounded"
+                style={{
+                  maxWidth: "60rem",
+                }}
                 key={item.id}
               >
                 <Row>
@@ -257,18 +207,16 @@ function App() {
                     <Card.Img variant="top" src={item.images[0].url} />
                   </Col>
                   <Col xs={12} md={6}>
-                    <Card.Body>
+                    <Card.Body className="text-center">
                       <Card.Title className="fs-3">{item.name}</Card.Title>
-                      <Card.Text className="text-danger fs-5">
-                        {item._embedded.venues[0].name}
-                      </Card.Text>
-                      <Card.Text>
-                        {item._embedded.venues[0].address.line1},{" "}
+                      <Card.Text className=" mt-0">
+                        <span className="text-danger fs-5">
+                          {item._embedded.venues[0].name}
+                        </span>{" "}
+                        <br /> {item._embedded.venues[0].address.line1},{" "}
                         {item._embedded.venues[0].city.name},{" "}
                         {item._embedded.venues[0].state.stateCode}{" "}
-                        {item._embedded.venues[0].postalCode}
-                      </Card.Text>
-                      <Card.Text>
+                        {item._embedded.venues[0].postalCode} <br />{" "}
                         {item.dates.start.localDate} /{" "}
                         {item.dates.start.localTime}
                       </Card.Text>
