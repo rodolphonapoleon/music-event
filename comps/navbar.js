@@ -16,9 +16,9 @@ const NavbarNavigation = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse
             id="basic-navbar-nav"
-            className="justify-content-end border"
+            className="justify-content-end"
           >
-            <Nav className=" border me-5">
+            <Nav className="me-5">
               <Link href="/" passHref className="nav-item border text-danger">
                 <a className="nav-link">Home</a>
               </Link>
